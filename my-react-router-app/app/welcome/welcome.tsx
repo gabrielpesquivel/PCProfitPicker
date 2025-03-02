@@ -1,185 +1,117 @@
-import { useState } from "react";
-import { fetchDeals } from "../utils/api"; // Adjust the import path as needed
+import { useState, useEffect } from "react";
+import { fetchDeals } from "../utils/api";
 import "./welcome.css";
 
-interface Listing {
-  image_url: string;
+interface Component {
   title: string;
-  product_url: string;
   price: number;
-  profit: number;
+  image_url: string;
+  product_url: string;
 }
 
-const placeholderImage = "https://cdn.discordapp.com/attachments/755242650684096612/1345750289373986936/IMG_3941.png?ex=67c5af1f&is=67c45d9f&hm=45eab3427fca9896d05f15850e7df4a37af40b4d08ff05b17f97c5505c004aa3&";
-const placeholderLink = "https://getcoxed.org/";
-const placeholderPrice = 10000;
+interface DealData {
+  title: string;
+  price: string;
+  image_url: string;
+  product_url: string;
+  profit: number;
+  components: Record<string, Component>;
+}
 
 export function Welcome() {
   const [budget, setBudget] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [isBudgetFocused, setIsBudgetFocused] = useState(false);
-  const [isZipCodeFocused, setIsZipCodeFocused] = useState(false);
-  const [deals, setDeals] = useState<Listing[]>([]);
-  const [openDealIndex, setOpenDealIndex] = useState<number | null>(null);
-
-  const toggleDropdown = (index: number) => {
-    setOpenDealIndex(openDealIndex === index ? null : index);
-  };
+  const [dealData, setDealData] = useState<DealData | null>(null);
+  const [openDealIndex, setOpenDealIndex] = useState<boolean>(false);
 
   const handleFindDeals = async () => {
     try {
-      const fetchedDeals = await fetchDeals(budget, zipCode);
-      setDeals(fetchedDeals.listings);
+      const fetchedData: DealData = await fetchDeals(budget);
+      setDealData(fetchedData);
     } catch (error) {
-      console.error("Error fetching deals:", error);
+      console.error("Error fetching deal data:", error);
     }
   };
-  
+
+  const toggleDropdown = () => {
+    setOpenDealIndex(!openDealIndex);
+  };
 
   return (
     <div className="welcome-container">
       <h1 className="welcome-title">Welcome to PC Part Flipper!</h1>
 
-      <style>
-        {`
-          .input::placeholder {
-            color: var(--clr-muted);
-            opacity: 1;
-          }
-        `}
-      </style>
-
       <div className="input-button-wrapper">
-
-         {/* Budget Input */}
-       <input
-        type="number"
-        placeholder={isBudgetFocused ? "" : "Highest Price (USD)"}
-        value={budget}
-        onChange={(e) => setBudget(e.target.value)}
-        className={`input ${isBudgetFocused ? "input-focused" : ""}`}
-        onFocus={() => setIsBudgetFocused(true)}
-        onBlur={() => setIsBudgetFocused(budget !== "")}
-      />
-
-      {/* Submit Button */}
-      <button className="button" onClick={handleFindDeals}>
-        Find Deals
-      </button>
-
+        <input
+          type="number"
+          placeholder="Highest Price (USD)"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+          className="input"
+        />
+        <button className="button" onClick={handleFindDeals}>
+          Find Deals
+        </button>
       </div>
 
-      {/* Display Deals */}
-      <div className="deals-container">
-        {deals.map((deal, index) => (
-          <div key={index} className="deal-item">
+      {dealData ? (
+        <div className="deals-container">
+          <div className="deal-item">
             <div className="left-deal-items">
-              {/* 1st Div: Image */}
               <div className="deal-image-container">
                 <img
-                  src={deal.image_url}
-                  alt={deal.title}
+                  src={dealData.image_url}
+                  alt={dealData.title}
                   className="deal-image"
                 />
               </div>
 
-            {/* 2nd Div: Price & Profit */}
-            <div className="deal-price-container">
-                <p className="deal-profit">Est Profit: ${deal.profit}</p>
-                <p className="deal-price">Price: ${deal.price}</p>
+              <div className="deal-price-container">
+                <p className="deal-profit">Est Profit: ${dealData.profit.toFixed(2)}</p>
+                <p className="deal-price">Price: ${dealData.price}</p>
               </div>
             </div>
 
-          {/* 3rd Div: Item Details */}
-          <div className="right-deal-items">
-            <div className="deal-info">
-              <p className="deal-title">
-                <button
-                  className="deal-button"
-                  onClick={() => window.open(deal.product_url, "_blank", "noopener,noreferrer")}
-                >
-                  {"Buy Now"}
-                </button>
-              </p>
-            </div>
+            <div className="right-deal-items">
+              <div className="deal-info">
+                <p className="deal-title">
+                  <button
+                    className="deal-button"
+                    onClick={() => window.open(dealData.product_url, "_blank", "noopener,noreferrer")}
+                  >
+                    Buy Now
+                  </button>
+                </p>
+              </div>
 
-              {/* 4th Div: Dropdown Button */}
               <div className="deal-dropdown">
-              <button className="dropdown-button" onClick={() => toggleDropdown(index)}>
-                Details
-              </button>
+                <button className="dropdown-button" onClick={toggleDropdown}>
+                  Details
+                </button>
+              </div>
             </div>
+
+            {openDealIndex && (
+              <div className="dropdown-content">
+                {Object.entries(dealData.components).map(([key, component]) => (
+                  <div key={key} className="dropdown-item">
+                    <img src={component.image_url} alt={component.title} className="dropdown-image" />
+                    <p className="dropdown-title">{component.title}</p>
+                    <p className="dropdown-price">Price: ${component.price}</p>
+                    <button
+                      className="dropdown-button"
+                      onClick={() => window.open(component.product_url, "_blank", "noopener,noreferrer")}
+                    >
+                      View {key.replace("-", " ").toUpperCase()}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-
-          {/* Dropdown content (appears below the row) */}
-          {/* Dropdown content (Replaces normal info when opened) */}
-                  {openDealIndex === index && (
-          <div className="dropdown-content">
-            {/* GPU */}
-            <div className="dropdown-item">
-              <img src={placeholderImage} alt="GPU" className="dropdown-image" />
-              <p className="dropdown-price">Price: ${placeholderPrice}</p>
-              <button
-              className="dropdown-button"
-              onClick={() => window.open(placeholderLink, "_blank", "noopener,noreferrer")}
-            >
-              View GPU
-            </button>
-            </div>
-
-            {/* CPU */}
-            <div className="dropdown-item">
-              <img src={placeholderImage} alt="CPU" className="dropdown-image" />
-              <p className="dropdown-price">Price: ${placeholderPrice}</p>
-              <button
-              className="dropdown-button"
-              onClick={() => window.open(placeholderLink, "_blank", "noopener,noreferrer")}
-            >
-              View CPU
-            </button>
-            </div>
-
-            {/* Memory */}
-            <div className="dropdown-item">
-              <img src={placeholderImage} alt="Memory" className="dropdown-image" />
-              <p className="dropdown-price">Price: ${placeholderPrice}</p>
-              <button
-              className="dropdown-button"
-              onClick={() => window.open(placeholderLink, "_blank", "noopener,noreferrer")}
-            >
-              View Mem
-            </button>
-            </div>
-
-            {/* RAM */}
-            <div className="dropdown-item">
-              <img src={placeholderImage} alt="RAM" className="dropdown-image" />
-              <p className="dropdown-price">Price: ${placeholderPrice}</p>
-              <button
-              className="dropdown-button"
-              onClick={() => window.open(placeholderLink, "_blank", "noopener,noreferrer")}
-            >
-              View RAM
-            </button>
-            </div>
-
-            {/* PSU */}
-            <div className="dropdown-item">
-              <img src={placeholderImage} alt="PSU" className="dropdown-image" />
-              <p className="dropdown-price">Price: ${placeholderPrice}</p>
-              <button
-              className="dropdown-button"
-              onClick={() => window.open(placeholderLink, "_blank", "noopener,noreferrer")}
-            >
-              View PSU
-            </button>
-            </div>
-          </div>
-        )}
-
-          </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <p>No deals found. Enter a budget and click "Find Deals".</p>
+      )}
     </div>
   );
 }

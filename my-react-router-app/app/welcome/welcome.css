@@ -193,7 +193,7 @@ body {
   color: var(--clr-muted);
   border: none;
   padding: 8px 12px;
-  font-size: 12px;
+  font-size: 8px;
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
@@ -218,6 +218,12 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+}
+
+.dropdown-title{
+  font-weight: bold;
+  color: var(--clr-muted);
+  text-align: center;
 }
 
 /* Dropdown Item Styling */
