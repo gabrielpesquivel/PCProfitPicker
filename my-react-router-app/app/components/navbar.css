@@ -3,16 +3,34 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--clr-accent);
+  color: var(--clr-muted);
   padding: 15px 20px;
   z-index: 1000; /* Ensure navbar stays above other elements */
+  display: flex;
+  justify-content: left;
+}
+
+.right-navbar{
+  align-items: center;
+  display: flex;
+  width: 100%;
 }
 
 .sides-clipper {
-  width: 800px;
-  max-width: 100%;
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Pushes items to edges */
+  align-items: center; /* Align items vertically */
+  padding-left: 10px;
+}
+
+.nav-image {
+  height: 50px; /* Adjust size as needed */
+  width: 50px;
+  min-width: 50px;
+  gap: 20px;
+  display: block; /* Prevents extra space from inline elements */
 }
 
 /* Ensure body content does not overlap navbar */
@@ -23,6 +41,8 @@ body {
 .logo {
   font-size: 24px;
   font-weight: bold;
+  display: flex;
+  align-items: center; /* Align text with image */
 }
 
 .nav-links {
@@ -36,7 +56,7 @@ body {
 }
 
 .nav-links a {
-  color: white;
+  color: var(--clr-muted);
   text-decoration: none;
   font-size: 18px;
 }

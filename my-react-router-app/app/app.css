@@ -3,11 +3,19 @@
 :root {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+  --clr-primary: #161415;
+  --clr-insideBox: #231f21;
+  --clr-secondary: #FDF0D5;
+  --clr-muted: #C6D8D3;
+  --clr-accent: #314439;
+  --clr-background: #EB5E55;
+  --clr-buttonPress: #61612c;
 }
 
 html,
 body {
-  background-color: white;
+  background-color: var(--clr-primary);
 }
 
 body.dark {

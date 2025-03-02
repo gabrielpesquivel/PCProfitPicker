@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import { Navbar } from "./components/navbar"; // ✅ Ensure Navbar is correctly imported
 import "./app.css"; // Global styles
 
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {

@@ -17,16 +17,51 @@ body {
 .welcome-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #2563eb;
+  color: var(--clr-muted);
 }
 
 /* Input fields */
 .input {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
+  margin: 10px 0px;
+  border: 4px solid var(--clr-accent);
   border-radius: 5px;
+  background-color: var(--clr-insideBox);
+}
+
+/* Button styling */
+.button {
+  background-color: var(--clr-accent);
+  color: var(--clr-muted);
+  cursor: pointer;
+  border-radius: 5px;
+  min-width: fit-content;
+  height: 50px;
+  padding: 10px;
+  font-size: 1em;
+  transition: all 0.37s;
+}
+
+.button:hover {
+  background-color: var(--clr-buttonPress);
+}
+
+.input-button-wrapper {
+  display: flex;
+  align-items: center; /* Aligns input and button vertically */
+  gap: 4px;
+}
+
+/* Change border color when input is focused */
+.input:focus {
+  outline: none;
+  border-color: var(--clr-buttonPress);
+}
+
+/* Change number input text color */
+.input[type="number"] {
+  color: var(--clr-muted); /* Change to desired color */
 }
 
 /* Disable number input scrolling in Chrome, Edge, and Safari */
@@ -41,21 +76,6 @@ body {
   -moz-appearance: textfield;
 }
 
-/* Button styling */
-.button {
-  background-color: #2563eb;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.button:hover {
-  background-color: #1d4ed8;
-}
-
 /* Deals Section */
 .deals-container {
   display: flex;
@@ -68,21 +88,39 @@ body {
 .deal-item {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensures divs are side by side */
+  justify-content: space-between;
   width: 100%;
   max-width: 800px;
-  background: #f9f9f9;
+  background: var(--clr-primary);
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 5px solid var(--clr-accent);
   margin: auto;
   gap: 15px;
+  flex-wrap: wrap; /* Allows items to wrap if needed */
+}
+
+.left-deal-items{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 86%;
+}
+
+.right-deal-items{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 }
 
 /* Image container */
 .deal-image-container {
   flex: 1; /* Takes equal space */
+  max-width: 120px;
   text-align: center;
+  color: var(--clr-muted);
 }
 
 .deal-image {
@@ -94,14 +132,17 @@ body {
 
 /* Info container */
 .deal-info {
-  flex: 2; /* Takes twice as much space */
-  text-align: left;
+  /* display: flex; */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column; /* Stack items if needed */
+  gap: 8px;
 }
 
 .deal-title a {
   font-size: 16px;
   font-weight: bold;
-  color: #007bff;
+  color: var(--clr-muted);
   text-decoration: none;
 }
 
@@ -109,21 +150,112 @@ body {
   text-decoration: underline;
 }
 
+.deal-button {
+  background-color: var(--clr-accent);
+  color: var(--clr-muted);
+  border: none;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.37s;
+  width: 85px;
+  height: 35px;
+}
+
+.deal-button:hover {
+  background-color: var(--clr-buttonPress);
+}
+
 /* Price & Profit Container */
 .deal-price-container {
   flex: 1;
-  text-align: right;
+  text-align: center;
 }
 
 .deal-price {
   font-size: 16px;
   font-weight: bold;
-  color: #333;
+  color: var(--clr-muted);
 }
 
 .deal-profit {
+  font-size: 30px;
+  color: rgb(11, 218, 11);
+}
+
+
+/* Dropdown Button */
+.dropdown-button {
+  background-color: var(--clr-accent);
+  color: var(--clr-muted);
+  border: none;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.37s;
+  width: 85px;
+  height: 35px;
+}
+
+.dropdown-button:hover {
+  background-color: var(--clr-buttonPress);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  width: 100%;
+  background: var(--clr-insideBox);
+  padding: 30px;
+  border-radius: 8px;
+  margin-top: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Dropdown Item Styling */
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Dropdown Images */
+.dropdown-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+/* Dropdown Price Text */
+.dropdown-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--clr-muted);
+  margin-bottom: 5px;
+}
+
+/* Dropdown Links */
+.dropdown-item a {
+  background-color: var(--clr-accent);
+  color: var(--clr-muted);
   font-size: 14px;
-  color: green;
+  text-decoration: none;
+  align-self: center;
+}
+
+.dropdown-item a:hover {
+  background-color: var(--clr-buttonPress);
 }
 
 /* Responsive Design */

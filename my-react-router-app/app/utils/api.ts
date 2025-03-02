@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://10.203.139.170:8000/scrapers/flips"; // Fixed formatting
+const API_BASE_URL = "http://10.203.139.170:8000/scrapers/flips_test/"; // Fixed formatting
 
 export const fetchDeals = async (budget: string, zipCode: string) => {
   try {
