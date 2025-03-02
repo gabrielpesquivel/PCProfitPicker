@@ -5,10 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "react-router";
+} from "react-router-dom"; // ✅ Use react-router-dom instead of react-router
 
 import type { Route } from "./+types/root";
-import "./app.css";
+import { Navbar } from "./components/navbar"; // ✅ Ensure Navbar is correctly imported
+import "./app.css"; // Global styles
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,18 +34,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <Navbar /> {/* ✅ Ensure Navbar appears on all pages */}
+        <main>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </main>
       </body>
     </html>
   );
 }
 
-export default function App() {
-  return <Outlet />;
+// ✅ This ensures pages render correctly inside Layout
+export default function Root() {
+  return (
+    <Layout>
+      <Outlet /> {/* ✅ Renders nested pages inside Layout */}
+    </Layout>
+  );
 }
 
+// ✅ Error Handling Remains Unchanged
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";

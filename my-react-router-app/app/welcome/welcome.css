@@ -1,0 +1,140 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Centered main container */
+.welcome-container {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  margin-top: 100px; /* Pushes content below navbar */
+}
+
+/* Title styling */
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+/* Input fields */
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Disable number input scrolling in Chrome, Edge, and Safari */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Disable scrolling on number input for Firefox */
+.input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Button styling */
+.button {
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Deals Section */
+.deals-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Each deal item (row) */
+.deal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures divs are side by side */
+  width: 100%;
+  max-width: 800px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin: auto;
+  gap: 15px;
+}
+
+/* Image container */
+.deal-image-container {
+  flex: 1; /* Takes equal space */
+  text-align: center;
+}
+
+.deal-image {
+  width: 120px; /* Ensures uniform size */
+  height: 120px; /* Ensures uniform size */
+  object-fit: cover; /* Ensures images are cropped properly */
+  border-radius: 6px;
+}
+
+/* Info container */
+.deal-info {
+  flex: 2; /* Takes twice as much space */
+  text-align: left;
+}
+
+.deal-title a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.deal-title a:hover {
+  text-decoration: underline;
+}
+
+/* Price & Profit Container */
+.deal-price-container {
+  flex: 1;
+  text-align: right;
+}
+
+.deal-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.deal-profit {
+  font-size: 14px;
+  color: green;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .deal-item {
+    flex-direction: column; /* Stack divs on small screens */
+    align-items: center;
+  }
+
+  .deal-price-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+}
